@@ -7,7 +7,7 @@ our @ISA = qw(Apache2::DirBasedHandler);
 
 use Template;
 our $tt;
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 
 =head1 NAME
 
@@ -74,7 +74,8 @@ Apache2::DirBasedHandler::TT - TT hooked into DirBasedHandler
 
 =head1 DESCRIPTION
 
-hi there
+Apache2::DirBasedHandler::TT, is an subclass of Apache2::DirBasedHandler with modified
+to allow easy use of Template Toolkit templates for content generation.
 
 =head2 init
 
@@ -128,7 +129,6 @@ sub process_template {
     my $self = shift;
     my ($r,$tt,$vars,$template_name,$content_type) = @_;
     my $page_out;
-    $r->warn(qq[process]);
     if (!$tt->process($template_name, $vars, \$page_out)) {
         $r->log_error($template_name . qq[ ] . $tt->error);
         return Apache2::Const::SERVER_ERROR;
@@ -136,5 +136,13 @@ sub process_template {
 
     return (Apache2::Const::OK,$page_out,$content_type);
 }
+
+1;
+
+=head1 AUTHOR AND COPYRIGHT
+
+Copyright 2008, Adam Prime (adam.prime@utoronto.ca) 
+
+This software is free. It is licensed under the same terms as Perl itself.
 
 
